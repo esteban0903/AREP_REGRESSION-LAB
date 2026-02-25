@@ -1,0 +1,209 @@
+================================================================================
+  AUTOMATIC COPILOT EVALUATION – TA-STYLE GRADING REPORT
+  Repository: Stellar Luminosity – Linear and Polynomial Regression
+  Author: Esteban Aguilera Contreras
+  Date evaluated: 2026-02-25
+================================================================================
+
+--------------------------------------------------------------------------------
+SUMMARY
+--------------------------------------------------------------------------------
+The repository presents a well-organized, technically complete implementation of
+linear and polynomial regression from first principles using only NumPy and
+Matplotlib. Both notebooks address all mandatory deliverables: the cost surface
+and contour (Notebook 1), convergence plots, multi-rate experiments, the M1/M2/M3
+feature-selection comparison, the w_MT cost sweep, and an inference demo
+(Notebook 2). The mathematical derivations are correct, the vectorized
+implementations are clean, and the README provides SageMaker execution evidence
+with relevant screenshots. One minor issue is a dead-code cell (cell 12) in
+Notebook 2 that contains a syntax typo (`urn` instead of `return`) in a
+`build_X` helper function, though the actual M1/M2/M3 experiment is correctly
+re-implemented in the following cell (cell 14) and runs without error. The
+conceptual discussion sections are present but lean brief on interpretive depth.
+Overall, this is strong, passing work.
+
+--------------------------------------------------------------------------------
+GRADING BREAKDOWN (0.0 – 5.0 scale)
+--------------------------------------------------------------------------------
+
+1. Repository Structure & Compliance ......................... 0.5 / 0.5
+   - README.md: present and descriptive.                         ✓
+   - Two notebooks covering Part I and Part II: present.         ✓
+   - Datasets defined inside notebooks (numpy arrays):           ✓
+   - Only allowed libraries (numpy, matplotlib,
+     mpl_toolkits.mplot3d – a matplotlib sub-package):           ✓
+   Deductions: none.
+
+2. Notebook 1 – Linear Regression (One Feature) .............. 2.0 / 2.0
+   - Dataset visualization (scatter M vs L): ✓
+   - Hypothesis (predict = w·M + b) and MSE function: ✓
+   - Cost surface – 3-D surface + contour plot + explanation
+     (grid over w ∈ [0,20], b ∈ [-5,5]; 3D viridis surface;
+     contour with clabels): ✓  [MANDATORY – PRESENT]
+   - Gradient derivation (analytical formulas in comments,
+     verified in code): ✓
+   - Gradient descent – non-vectorized (explicit loop): ✓
+   - Gradient descent – vectorized (NumPy sum/dot): ✓
+   - Convergence plot (MSE vs iteration, both GD versions): ✓  [MANDATORY – PRESENT]
+   - Multiple learning-rate experiments: three rates tested
+     (0.001, 0.01, 0.05); final w, b, and loss reported: ✓  [MANDATORY – PRESENT]
+   - Final fit plot (best-alpha line over scatter data): ✓
+   - Conceptual understanding (meaning of w as luminosity
+     sensitivity to mass; limits of linearity vs power-law
+     stellar relation): ✓
+   Deductions: none. All mandatory and optional items are present.
+
+3. Notebook 2 – Polynomial Regression (Two Features) ......... 1.8 / 2.0
+   - Visualization with temperature color encoding
+     (scatter L vs M, c=T, cmap='plasma'): ✓
+   - Feature engineering X = [M, T_k, M², M·T_k]
+     (T_k = T/1000 for numerical stability): ✓
+   - Vectorized loss and gradients (matrix formulation
+     using X @ w + b, X.T @ err): ✓
+   - Training (full model) and convergence plot
+     (MSE vs iteration): ✓  [MANDATORY – PRESENT]
+   - M1/M2/M3 feature-selection experiment (predicted vs
+     real scatter + convergence curves for all three): ✓  [MANDATORY – PRESENT]
+   - Interaction cost analysis: w_MT sweep ±2 around trained
+     value; MSE curve shows clear minimum at trained w_MT: ✓  [MANDATORY – PRESENT]
+   - Inference demo (M=1.3 M⊙, T=6600 K → L_pred with
+     one-sentence interpretation): ✓  [MANDATORY – PRESENT]
+   Deductions:
+   - (-0.1) Cell 12 contains a dead-code block with a syntax error
+     (`urn np.column_stack` instead of `return np.column_stack`).
+     While functionally harmless (the correct experiment is in
+     cell 14), it indicates incomplete cleanup.
+   - (-0.1) Inference interpretation is minimal (single printed
+     comment; no quantitative comparison with catalogue values
+     or discussion of model confidence).
+
+4. Cloud Execution Evidence (SageMaker) ...................... 0.5 / 0.5
+   - Description of SageMaker execution (upload, kernel
+     selection, Run All): ✓
+   - Screenshots: sagemaker-notebooks.png (notebooks open in
+     Studio) plus 14 additional output screenshots covering
+     all assignment sections: ✓
+   - Brief local vs cloud comparison (rendering time, kernel
+     behaviour, output parity): ✓
+   Deductions: none.
+
+--------------------------------------------------------------------------------
+FINAL GRADE
+--------------------------------------------------------------------------------
+  Repository structure & compliance:  0.5 / 0.5
+  Notebook 1 – Linear regression:     2.0 / 2.0
+  Notebook 2 – Polynomial regression: 1.8 / 2.0
+  Cloud execution evidence:           0.5 / 0.5
+                                    ───────────
+  Final grade: 4.8 / 5.0
+
+  Result: PASS (≥ 3.0)
+
+--------------------------------------------------------------------------------
+STRENGTHS
+--------------------------------------------------------------------------------
+  • Complete coverage of all MANDATORY items in both notebooks (cost surface,
+    convergence plots, ≥3 learning-rate experiments, M1/M2/M3 comparison,
+    w_MT sweep, inference demo).
+  • Clean, correct vectorized implementations using only NumPy; no ML libraries.
+  • Temperature scaling (T_k = T/1000) shows awareness of numerical stability
+    in gradient descent.
+  • 3-D cost surface plus contour overlay in Notebook 1 provides strong visual
+    intuition.
+  • SageMaker evidence is well documented with a comprehensive screenshot
+    gallery organized section by section.
+  • Both non-vectorized and vectorized gradient descent are implemented and
+    clearly distinguished.
+  • README is personal and context-rich; local vs cloud comparison is concise
+    but informative.
+
+--------------------------------------------------------------------------------
+ISSUES & MISSING ELEMENTS
+--------------------------------------------------------------------------------
+  • Cell 12 in Notebook 2 is dead code with a syntax typo; it should be removed
+    or corrected to avoid confusion.
+  • Inference section (Notebook 2, cell 18) provides only a one-line textual
+    comment; a richer interpretation (e.g., comparison to nearest training point
+    or discussion of extrapolation risk) would strengthen the deliverable.
+  • Conceptual discussion in Notebook 1 (cell 22) is embedded in a markdown
+    cell as bullet points rather than in running code/output; the content is
+    correct but could be more developed (e.g., quantifying the non-linearity
+    residuals).
+  • No inline markdown explanation accompanies the cost surface cell; the code
+    is self-evident but an explanatory note on what the contour shape implies
+    (convexity, unique minimum) would add value.
+
+--------------------------------------------------------------------------------
+TA FEEDBACK TO STUDENT
+--------------------------------------------------------------------------------
+Well done. You have met every mandatory requirement and your implementations are
+mathematically sound and clean. The use of T_k scaling and carefully chosen
+learning rates reflect good engineering intuition. For the final polish:
+
+  1. Remove or fix the dead-code cell in Notebook 2 before submission — a stray
+     syntax error, even in unused code, suggests incomplete review.
+  2. Expand the inference commentary in Notebook 2: state what physical regime
+     the input (M=1.3, T=6600 K) belongs to, how far the prediction is from the
+     nearest training sample, and what that implies about generalization.
+  3. In Notebook 1, briefly discuss what the shape of the contour plot tells you
+     about the optimization landscape (elongated ellipses → correlated
+     parameters, good conditioned vs ill-conditioned directions).
+  4. Consider adding one sentence linking the multi-learning-rate experiment
+     results to practical guidance (e.g., "alpha=0.05 overshoots for this
+     dataset scale; 0.01 is the practical sweet spot").
+
+These are refinements; the core work is solid and demonstrates genuine
+understanding of the material.
+
+================================================================================
+AI-GENERATION ASSESSMENT (NON-GRADING — INFORMATIVE ONLY)
+================================================================================
+This assessment is observational and does not imply misconduct.
+
+A. Qualitative Assessment
+--------------------------
+  Indicators suggesting AI assistance:
+    - Highly uniform code style throughout both notebooks (consistent naming
+      conventions, spacing, comment density, and function signature patterns).
+    - Markdown explanations are technically precise but use generic pedagogical
+      phrasing (e.g., "Entrenamos usando un loop explícito sobre las muestras
+      para calcular gradientes") that reads more like documentation than a
+      student's own voice.
+    - Gradient derivation formulas are given as comments that exactly match
+      standard textbook notation with no intermediate steps or personal
+      annotation.
+    - Section headings closely track the assignment rubric in a systematic,
+      comprehensive way that is characteristic of AI-assisted structuring.
+
+  Indicators suggesting human work:
+    - The README contains clearly personal language ("Este trabajo lo hice para
+      entender, con calma y de forma práctica…") and first-person reflections.
+    - The temperature-scaling decision (T_k = T/1000) and its stated rationale
+      ("para estabilidad numérica") reflect problem-specific reasoning.
+    - The dead-code cell (cell 12 in Notebook 2) with its typo is a realistic
+      artifact of iterative human editing that AI tools would typically clean up.
+    - The choice of hyperparameters (alpha, iterations) and the observation that
+      α=0.05 with 500 iterations is sufficient indicates hands-on experimentation.
+
+B. Quantitative Estimate
+--------------------------
+    Code:                 ~65%
+    Explanations/Markdown: ~55%
+    README:               ~30%
+
+C. Commentary
+--------------------------
+  The code and in-notebook markdown show strong signatures of AI scaffolding:
+  uniform structure, textbook-accurate formulas, and systematic coverage of
+  every rubric point. However, the README has a noticeably personal tone and
+  the hyperparameter choices, scaling decisions, and iterative dead-code
+  artifact suggest active human engagement with the material. The most likely
+  scenario is that AI tools were used to generate initial code templates and
+  explanatory markdown, which the student then adapted and extended through
+  their own experimentation.
+
+  This assessment is observational and does not imply misconduct.
+
+================================================================================
+END OF REPORT
+================================================================================
